@@ -8,8 +8,8 @@
           </span>
         </a>
         <ul class="navbar-nav flex-row ml-md-auto d-md-flex">
-          <li><a href="/blog/">SIGN IN</a></li>
-          <li><a href="/docs/about/">SIGN UP</a></li>
+          <li><el-button :loading="loading" type="primary" @click.native.prevent="handleLogin">SIGN IN</el-button></li>
+          <li><el-button :loading="loading" type="primary" @click.native.prevent="handleLogin">SIGN UP</el-button></li>
         </ul>
       </div><!-- /.container -->
     </header>
@@ -41,14 +41,23 @@
           <svg-icon icon-class="eye" />
         </span>
       </el-form-item>
+      <el-form-item prop="Remember" id="remember_div">
+        <el-checkbox label="Remember Me" name="remember"/>
+        <el-button :loading="loading" type="primary" class="pull-right" @click.native.prevent="handleLogin">
+          Forgot password?
+        </el-button>
+      </el-form-item>
       <el-form-item>
         <el-button :loading="loading" type="primary" style="width:100%;" @click.native.prevent="handleLogin">
           SIGN IN
         </el-button>
       </el-form-item>
-      <div class="tips">
-        <span style="margin-right:20px;">Email: admin@laravue.dev</span>
-        <span>Password: laravue</span>
+      <div class="singup_div">
+        <span>Don't have an account?
+          <el-button :loading="loading" type="primary" @click.native.prevent="handleLogin">
+            Register
+          </el-button>
+        </span>
       </div>
     </el-form>
   </div>
@@ -133,6 +142,16 @@ $light_gray:#000;
 
 /* reset element-ui css */
 .login-container {
+  overflow: scroll;
+  #remember_div {
+    background: transparent;
+    button {
+      color: #22ade4;
+      width: auto;
+      background: transparent;
+      border: transparent;
+    }
+  }
   .el-input {
     display: inline-block;
     height: 47px;
@@ -165,6 +184,7 @@ $light_gray:#000;
 $bg:#fff;
 $dark_gray:#889aa4;
 $light_gray:#eee;
+$main_color: #22ade4;
 .login-container {
   position: fixed;
   height: 100%;
@@ -175,15 +195,18 @@ $light_gray:#eee;
   }
   .navbar-nav li {
     padding: 10px;
-    a {
+    button {
       text-decoration: none;
       color: #000;
-    }
-    &:hover {
-      background: #4abe99;
-      border-radius: 16px;
-      a {
-        color: #fff;
+      background: transparent;
+      border-color: transparent;
+      &:hover {
+        background: $main_color;
+        border-radius: 16px;
+        cursor: pointer;
+        button {
+          color: #fff;
+        }
       }
     }
   }
@@ -201,8 +224,8 @@ $light_gray:#eee;
     margin: 120px auto;
     border: 1px solid #eee;
     button {
-      background-color: #4abe99;
-      border-color: #4abe99;
+      background-color: $main_color;
+      border-color: $main_color;
       span {
         font-size: 30px;
         font-weight: bold;
@@ -216,10 +239,17 @@ $light_gray:#eee;
       text-align: center;
     }
   }
-  .tips {
+  .singup_div {
     font-size: 14px;
-    color: #fff;
+    color: #000;
     margin-bottom: 10px;
+    text-align: center;
+    button {
+      color: #22ade4;
+      width: auto;
+      background: transparent;
+      border: transparent;
+    }
     span {
       &:first-of-type {
         margin-right: 16px;
