@@ -2,16 +2,23 @@
   <div class="login-container">
     <header class="navbar navbar-default navbar-demo navbar-fixed-top eslint-nav" id="top" role="banner">
       <div class="container">
-        <a href="/" class="navbar-brand"><img alt="ESLint" src="/assets/img/logo.svg" itemprop="image">ESLint</a>
-        <nav id="eslint-navbar" class="collapse navbar-collapse eslint-navbar">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="/blog/">Blog</a></li>
-            <li><a href="/docs/about/">About</a></li>
-          </ul>
-        </nav>
+        <a href="/" class="navbar-brand">
+          <span class="svg-container-block">
+            <svg-icon id="humbl-black-logo" icon-class="humbl-black" />
+          </span>
+        </a>
+        <ul class="navbar-nav flex-row ml-md-auto d-md-flex">
+          <li><a href="/blog/">SIGN IN</a></li>
+          <li><a href="/docs/about/">SIGN UP</a></li>
+        </ul>
       </div><!-- /.container -->
     </header>
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
+      <div class="logo-container">
+        <span class="svg-container-block">
+          <svg-icon id="humbl-all-caps-logo" icon-class="humbl-all-caps" />
+        </span>
+      </div>
       <h3 class="title">{{ $t('login.title') }}</h3>
       <el-form-item prop="email">
         <span class="svg-container">
@@ -36,7 +43,7 @@
       </el-form-item>
       <el-form-item>
         <el-button :loading="loading" type="primary" style="width:100%;" @click.native.prevent="handleLogin">
-          Sign in
+          SIGN IN
         </el-button>
       </el-form-item>
       <div class="tips">
@@ -163,14 +170,51 @@ $light_gray:#eee;
   height: 100%;
   width: 100%;
   background-color: $bg;
+  .navbar {
+    border-bottom: 1px solid #f9f9f9;
+  }
+  .navbar-nav li {
+    padding: 10px;
+    a {
+      text-decoration: none;
+      color: #000;
+    }
+    &:hover {
+      background: #4abe99;
+      border-radius: 16px;
+      a {
+        color: #fff;
+      }
+    }
+  }
+  #humbl-black-logo {
+    width: 100px;
+    height: 100px;
+  }
   .login-form {
     position: absolute;
     left: 0;
     right: 0;
     width: 520px;
     max-width: 100%;
-    padding: 35px 35px 15px 35px;
+    padding: 35px 50px 15px 50px;
     margin: 120px auto;
+    border: 1px solid #eee;
+    button {
+      background-color: #4abe99;
+      border-color: #4abe99;
+      span {
+        font-size: 30px;
+        font-weight: bold;
+      }
+    }
+    #humbl-all-caps-logo {
+      width: 100px;
+      height: auto;
+    }
+    .logo-container {
+      text-align: center;
+    }
   }
   .tips {
     font-size: 14px;
@@ -189,10 +233,15 @@ $light_gray:#eee;
     width: 30px;
     display: inline-block;
   }
+  .svg-container-block {
+    padding: 6px 5px 6px 15px;
+    color: $dark_gray;
+    vertical-align: middle;
+  }
   .title {
     font-size: 26px;
     font-weight: 400;
-    color: $light_gray;
+    color: #000;
     margin: 0px auto 40px auto;
     text-align: center;
     font-weight: bold;
