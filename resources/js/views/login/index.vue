@@ -1,8 +1,18 @@
 <template>
   <div class="login-container">
+    <header class="navbar navbar-default navbar-demo navbar-fixed-top eslint-nav" id="top" role="banner">
+      <div class="container">
+        <a href="/" class="navbar-brand"><img alt="ESLint" src="/assets/img/logo.svg" itemprop="image">ESLint</a>
+        <nav id="eslint-navbar" class="collapse navbar-collapse eslint-navbar">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/blog/">Blog</a></li>
+            <li><a href="/docs/about/">About</a></li>
+          </ul>
+        </nav>
+      </div><!-- /.container -->
+    </header>
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
       <h3 class="title">{{ $t('login.title') }}</h3>
-      <lang-select class="set-language" />
       <el-form-item prop="email">
         <span class="svg-container">
           <svg-icon icon-class="user" />
@@ -38,12 +48,10 @@
 </template>
 
 <script>
-import LangSelect from '@/components/LangSelect';
 import { validEmail } from '@/utils/validate';
 
 export default {
   name: 'Login',
-  components: { LangSelect },
   data() {
     const validateEmail = (rule, value, callback) => {
       if (!validEmail(value)) {
@@ -112,8 +120,9 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss">
+@import "~bootstrap/scss/bootstrap";
 $bg:#2d3a4b;
-$light_gray:#eee;
+$light_gray:#000;
 
 /* reset element-ui css */
 .login-container {
@@ -146,7 +155,7 @@ $light_gray:#eee;
 </style>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-$bg:#2d3a4b;
+$bg:#fff;
 $dark_gray:#889aa4;
 $light_gray:#eee;
 .login-container {
