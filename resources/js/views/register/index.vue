@@ -9,22 +9,22 @@
         </a>
         <ul class="navbar-nav flex-row ml-md-auto d-md-flex">
           <li><el-button :loading="loading" type="primary" @click.native.prevent="handleLogin">SIGN IN</el-button></li>
-          <li><el-button :loading="loading" type="primary" @click.native.prevent="handleRegister">SIGN UP</el-button></li>
+          <li><el-button :loading="loading" type="primary" @click.native.prevent="handleLogin">SIGN UP</el-button></li>
         </ul>
       </div><!-- /.container -->
     </header>
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
+    <el-form ref="registerForm" :model="registerForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
       <div class="logo-container">
         <span class="svg-container-block">
           <svg-icon id="humbl-all-caps-logo" icon-class="humbl-all-caps" />
         </span>
       </div>
-      <h3 class="title">{{ $t('login.title') }}</h3>
+      <h3 class="title">{{ $t('register.title') }}</h3>
       <el-form-item prop="email">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
-        <el-input v-model="loginForm.email" name="email" type="text" auto-complete="on" :placeholder="$t('login.email')" />
+        <el-input v-model="registerForm.email" name="email" type="text" auto-complete="on" :placeholder="$t('register.email')" />
       </el-form-item>
       <el-form-item prop="password">
         <span class="svg-container">
@@ -32,7 +32,7 @@
         </span>
         <el-input
           :type="pwdType"
-          v-model="loginForm.password"
+          v-model="registerForm.password"
           name="password"
           auto-complete="on"
           placeholder="password"
@@ -41,20 +41,14 @@
           <svg-icon icon-class="eye" />
         </span>
       </el-form-item>
-      <el-form-item prop="Remember" id="remember_div">
-        <el-checkbox label="Remember Me" name="remember"/>
-        <el-button :loading="loading" type="primary" class="pull-right" @click.native.prevent="handleLogin">
-          Forgot password?
-        </el-button>
-      </el-form-item>
       <el-form-item>
         <el-button :loading="loading" type="primary" style="width:100%;" @click.native.prevent="handleLogin">
-          SIGN IN
+          REGISTER
         </el-button>
       </el-form-item>
       <div class="singup_div">
         <span>Don't have an account?
-          <el-button :loading="loading" type="primary" @click.native.prevent="handleRegister">
+          <el-button :loading="loading" type="primary" @click.native.prevent="handleLogin">
             Register
           </el-button>
         </span>
@@ -67,7 +61,7 @@
 import { validEmail } from '@/utils/validate';
 
 export default {
-  name: 'Login',
+  name: 'Register',
   data() {
     const validateEmail = (rule, value, callback) => {
       if (!validEmail(value)) {
@@ -84,9 +78,9 @@ export default {
       }
     };
     return {
-      loginForm: {
-        email: 'admin@laravue.dev',
-        password: 'laravue',
+      registerForm: {
+        email: '',
+        password: '',
       },
       loginRules: {
         email: [{ required: true, trigger: 'blur', validator: validateEmail }],
@@ -114,10 +108,10 @@ export default {
       }
     },
     handleLogin() {
-      this.$refs.loginForm.validate(valid => {
+      this.$refs.registerForm.validate(valid => {
         if (valid) {
           this.loading = true;
-          this.$store.dispatch('user/login', this.loginForm)
+          this.$store.dispatch('user/login', this.registerForm)
             .then(() => {
               this.$router.push({ path: this.redirect || '/' });
               this.loading = false;
@@ -130,10 +124,6 @@ export default {
           return false;
         }
       });
-    },
-    handleRegister() {
-      this.$router.push({ path: '/register' });
-      // window.location.href = '/register';
     },
   },
 };
