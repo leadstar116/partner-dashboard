@@ -13,6 +13,9 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\UserResource as UserResource;
+use App\Laravue\Models\User;
+use Illuminate\Support\Facades\Hash;
+use App\Laravue\Models\Role;
 
 /**
  * Class AuthController
@@ -32,7 +35,29 @@ class AuthController extends Controller
             return response()->json(new UserResource(Auth::user()), Response::HTTP_OK)->header('Authorization', $token);
         }
 
-        return response()->json(new JsonResponse([], 'login_error'), Response::HTTP_UNAUTHORIZED);
+        return response()->json(new JsonResponse([], 'The email or password is incorrect, please try again!'), Response::HTTP_UNAUTHORIZED);
+    }
+
+    public function register(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+        if(User::where('email', $credentials['email'])->count()) {
+            return response()->json(new JsonResponse([], 'This email already exists!'), Response::HTTP_UNAUTHORIZED);
+        }
+
+        $user = User::create([
+            'email' => $credentials['email'],
+            'password' => Hash::make($credentials['password'])
+        ]);
+        $role = Role::findByName('User');
+        $user->syncRoles($role);
+
+        if ($token = $this->guard()->attempt($credentials)) {
+            return response()->json(new UserResource(Auth::user()), Response::HTTP_OK)->header('Authorization', $token);
+        }
+
+        return response()->json(new JsonResponse([], 'There was an error during register'), Response::HTTP_UNAUTHORIZED);
     }
 
     public function logout()

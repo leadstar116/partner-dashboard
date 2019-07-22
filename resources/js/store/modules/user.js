@@ -1,4 +1,4 @@
-import { login, logout, getInfo } from '@/api/auth';
+import { login, register, logout, getInfo } from '@/api/auth';
 import { getToken, setToken, removeToken } from '@/utils/auth';
 import router, { resetRouter } from '@/router';
 import store from '@/store';
@@ -43,6 +43,22 @@ const actions = {
     const { email, password } = userInfo;
     return new Promise((resolve, reject) => {
       login({ email: email.trim(), password: password })
+        .then(response => {
+          commit('SET_TOKEN', response.token);
+          setToken(response.token);
+          resolve();
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+
+  // user register
+  register({ commit }, userInfo) {
+    const { email, password } = userInfo;
+    return new Promise((resolve, reject) => {
+      register({ email: email.trim(), password: password })
         .then(response => {
           commit('SET_TOKEN', response.token);
           setToken(response.token);
