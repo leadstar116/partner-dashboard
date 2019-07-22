@@ -13,43 +13,29 @@
         </ul>
       </div><!-- /.container -->
     </header>
-    <el-form ref="registerForm" :model="registerForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
+    <el-form ref="forgetForm" :model="forgetForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
       <div class="logo-container">
         <span class="svg-container-block">
           <svg-icon id="humbl-all-caps-logo" icon-class="humbl-all-caps" />
         </span>
       </div>
-      <h3 class="title">{{ $t('register.title') }}</h3>
+      <h3 class="title">{{ $t('forget.title') }}</h3>
+      <p class="text-center">{{ $t('forget.tips') }}</p>
       <el-form-item prop="email">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
-        <el-input v-model="registerForm.email" name="email" type="text" auto-complete="on" :placeholder="$t('register.email')" />
-      </el-form-item>
-      <el-form-item prop="password">
-        <span class="svg-container">
-          <svg-icon icon-class="password" />
-        </span>
-        <el-input
-          :type="pwdType"
-          v-model="registerForm.password"
-          name="password"
-          auto-complete="on"
-          placeholder="password"
-          @keyup.enter.native="handleLogin" />
-        <span class="show-pwd" @click="showPwd">
-          <svg-icon icon-class="eye" />
-        </span>
+        <el-input v-model="forgetForm.email" name="email" type="text" auto-complete="on" :placeholder="$t('forget.email')" />
       </el-form-item>
       <el-form-item>
         <el-button :loading="loading" type="primary" style="width:100%;" @click.native.prevent="handleLogin">
-          REGISTER
+          SEND
         </el-button>
       </el-form-item>
       <div class="singup_div">
-        <span>Don't have an account?
+        <span>Know your password?
           <el-button :loading="loading" type="primary" @click.native.prevent="handleLogin">
-            Register
+            Login
           </el-button>
         </span>
       </div>
@@ -78,7 +64,7 @@ export default {
       }
     };
     return {
-      registerForm: {
+      forgetForm: {
         email: '',
         password: '',
       },
@@ -100,30 +86,8 @@ export default {
     },
   },
   methods: {
-    showPwd() {
-      if (this.pwdType === 'password') {
-        this.pwdType = '';
-      } else {
-        this.pwdType = 'password';
-      }
-    },
     handleLogin() {
-      this.$refs.registerForm.validate(valid => {
-        if (valid) {
-          this.loading = true;
-          this.$store.dispatch('user/login', this.registerForm)
-            .then(() => {
-              this.$router.push({ path: this.redirect || '/' });
-              this.loading = false;
-            })
-            .catch(() => {
-              this.loading = false;
-            });
-        } else {
-          console.log('error submit!!');
-          return false;
-        }
-      });
+      this.$router.push({ path: '/login' });
     },
   },
 };

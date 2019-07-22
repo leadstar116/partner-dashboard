@@ -43,7 +43,7 @@
       </el-form-item>
       <el-form-item prop="Remember" id="remember_div">
         <el-checkbox label="Remember Me" name="remember"/>
-        <el-button :loading="loading" type="primary" class="pull-right" @click.native.prevent="handleLogin">
+        <el-button :loading="loading" type="primary" class="pull-right" @click.native.prevent="handleForget">
           Forgot password?
         </el-button>
       </el-form-item>
@@ -131,9 +131,11 @@ export default {
         }
       });
     },
+    handleForget() {
+      this.$router.push({ path: '/forget-password' });
+    },
     handleRegister() {
       this.$router.push({ path: '/register' });
-      // window.location.href = '/register';
     },
   },
 };
