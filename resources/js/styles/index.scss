@@ -1,5 +1,6 @@
 @import '~normalize.css/normalize.css';
 @import '~element-ui/lib/theme-chalk/index.css';
+@import "~font-awesome/css/font-awesome.min";
 @import 'variables';
 @import 'mixin';
 @import 'transition';
@@ -13,7 +14,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif, Open Sans;
 }
 
 label {
