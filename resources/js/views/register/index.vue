@@ -9,7 +9,7 @@
         </a>
         <ul class="navbar-nav flex-row ml-md-auto d-md-flex">
           <li><el-button :loading="loading" type="primary" @click.native.prevent="handleLogin">SIGN IN</el-button></li>
-          <li><el-button :loading="loading" type="primary" @click.native.prevent="handleLogin">SIGN UP</el-button></li>
+          <li><el-button :loading="loading" type="primary">SIGN UP</el-button></li>
         </ul>
       </div><!-- /.container -->
     </header>
@@ -36,22 +36,18 @@
           name="password"
           auto-complete="on"
           placeholder="password"
-          @keyup.enter.native="handleLogin" />
+          @keyup.enter.native="handleRegister" />
         <span class="show-pwd" @click="showPwd">
           <svg-icon icon-class="eye" />
         </span>
       </el-form-item>
       <el-form-item>
-        <el-button :loading="loading" type="primary" style="width:100%;" @click.native.prevent="handleLogin">
+        <el-button :loading="loading" type="primary" style="width:100%;" @click.native.prevent="handleRegister">
           REGISTER
         </el-button>
       </el-form-item>
       <div class="singup_div">
-        <span>Don't have an account?
-          <el-button :loading="loading" type="primary" @click.native.prevent="handleLogin">
-            Register
-          </el-button>
-        </span>
+        <span>OR</span>
       </div>
     </el-form>
   </div>
@@ -108,10 +104,13 @@ export default {
       }
     },
     handleLogin() {
+      this.$router.push({ path: '/login' });
+    },
+    handleRegister() {
       this.$refs.registerForm.validate(valid => {
         if (valid) {
           this.loading = true;
-          this.$store.dispatch('user/login', this.registerForm)
+          this.$store.dispatch('user/register', this.registerForm)
             .then(() => {
               this.$router.push({ path: this.redirect || '/' });
               this.loading = false;

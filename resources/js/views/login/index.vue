@@ -8,7 +8,7 @@
           </span>
         </a>
         <ul class="navbar-nav flex-row ml-md-auto d-md-flex">
-          <li><el-button :loading="loading" type="primary" @click.native.prevent="handleLogin">SIGN IN</el-button></li>
+          <li><el-button :loading="loading" type="primary" @click.native.prevent="">SIGN IN</el-button></li>
           <li><el-button :loading="loading" type="primary" @click.native.prevent="handleRegister">SIGN UP</el-button></li>
         </ul>
       </div><!-- /.container -->

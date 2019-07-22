@@ -9,7 +9,7 @@
         </a>
         <ul class="navbar-nav flex-row ml-md-auto d-md-flex">
           <li><el-button :loading="loading" type="primary" @click.native.prevent="handleLogin">SIGN IN</el-button></li>
-          <li><el-button :loading="loading" type="primary" @click.native.prevent="handleLogin">SIGN UP</el-button></li>
+          <li><el-button :loading="loading" type="primary" @click.native.prevent="handleRegister">SIGN UP</el-button></li>
         </ul>
       </div><!-- /.container -->
     </header>
@@ -28,7 +28,7 @@
         <el-input v-model="forgetForm.email" name="email" type="text" auto-complete="on" :placeholder="$t('forget.email')" />
       </el-form-item>
       <el-form-item>
-        <el-button :loading="loading" type="primary" style="width:100%;" @click.native.prevent="handleLogin">
+        <el-button :loading="loading" type="primary" style="width:100%;" @click.native.prevent="handleForget">
           SEND
         </el-button>
       </el-form-item>
@@ -88,6 +88,12 @@ export default {
   methods: {
     handleLogin() {
       this.$router.push({ path: '/login' });
+    },
+    handleRegister() {
+      this.$router.push({ path: '/register' });
+    },
+    handleForget() {
+      this.$router.push({ path: '/forget-password' });
     },
   },
 };
