@@ -18,26 +18,36 @@ class DatabaseSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'admin@portal.dev',
             'password' => Hash::make('admin'),
+            'profile_id' => -1,
+            'profile_completed' => 0,
         ]);
         $manager = User::create([
             'name' => 'Manager',
             'email' => 'manager@portal.dev',
             'password' => Hash::make('portal'),
+            'profile_id' => -1,
+            'profile_completed' => 0,
         ]);
         $editor = User::create([
             'name' => 'Editor',
             'email' => 'editor@portal.dev',
             'password' => Hash::make('portal'),
+            'profile_id' => -1,
+            'profile_completed' => 0,
         ]);
         $user = User::create([
             'name' => 'User',
             'email' => 'user@portal.dev',
             'password' => Hash::make('portal'),
+            'profile_id' => -1,
+            'profile_completed' => 0,
         ]);
         $visitor = User::create([
             'name' => 'Visitor',
             'email' => 'visitor@portal.dev',
             'password' => Hash::make('portal'),
+            'profile_id' => -1,
+            'profile_completed' => 0,
         ]);
 
         $adminRole = Role::findByName(\App\Laravue\Acl::ROLE_ADMIN);

@@ -78,6 +78,8 @@ class UsersTableSeeder extends Seeder
                 'name' => $fullName,
                 'email' => strtolower($name) . '@laravue.dev',
                 'password' => \Illuminate\Support\Facades\Hash::make('laravue'),
+                'profile_id' => -1,
+                'profile_completed' => 0,
             ]);
 
             $role = Role::findByName($roleName);

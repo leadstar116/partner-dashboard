@@ -21,7 +21,6 @@ class CreateProfileTable extends Migration
             $table->string('tagline', 255);
             $table->string('email', 255);
             $table->string('phone', 255);
-            $table->enum('industry', ['']);
             $table->string('address', 255);
             $table->string('city', 255);
             $table->string('country', 255);
