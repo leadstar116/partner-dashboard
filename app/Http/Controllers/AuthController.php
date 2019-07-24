@@ -32,7 +32,10 @@ class AuthController extends Controller
     {
         $credentials = $request->only('email', 'password');
         if ($token = $this->guard()->attempt($credentials)) {
-            return response()->json(new UserResource(Auth::user()), Response::HTTP_OK)->header('Authorization', $token);
+            $profile_completed = User::where('email', $credentials['email'])->pluck('profile_completed')->first();
+            response()->json(new UserResource(Auth::user()), Response::HTTP_OK)->header('Authorization', $token);
+            $result = ['profile_completed' => $profile_completed, 'token' => $token];
+            return response()->json($result);
         }
 
         return response()->json(new JsonResponse([], 'The email or password is incorrect, please try again!'), Response::HTTP_UNAUTHORIZED);

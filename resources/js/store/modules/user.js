@@ -46,7 +46,7 @@ const actions = {
         .then(response => {
           commit('SET_TOKEN', response.token);
           setToken(response.token);
-          resolve();
+          resolve(response.profile_completed);
         })
         .catch(error => {
           reject(error);

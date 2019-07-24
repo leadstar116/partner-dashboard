@@ -73,6 +73,11 @@ export const constantRoutes = [
     hidden: true,
   },
   {
+    path: '/profile-complete',
+    component: () => import('@/views/profile-complete/index'),
+    hidden: true,
+  },
+  {
     path: '/auth-redirect',
     component: () => import('@/views/login/AuthRedirect'),
     hidden: true,

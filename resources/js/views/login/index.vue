@@ -118,8 +118,12 @@ export default {
         if (valid) {
           this.loading = true;
           this.$store.dispatch('user/login', this.loginForm)
-            .then(() => {
-              this.$router.push({ path: this.redirect || '/' });
+            .then((result) => {
+              if (result) {
+                this.$router.push({ path: this.redirect || '/' });
+              } else {
+                this.$router.push({ path: '/profile-complete' });
+              }
               this.loading = false;
             })
             .catch(() => {
