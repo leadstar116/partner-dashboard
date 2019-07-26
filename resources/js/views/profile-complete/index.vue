@@ -8,7 +8,8 @@
           </span>
         </a>
         <ul class="navbar-nav flex-row ml-md-auto d-md-flex">
-          <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
+
+          <!-- <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
             <div class="avatar-wrapper">
               <img :src="avatar+'/128'" class="user-avatar">
               <i class="el-icon-caret-bottom" />
@@ -18,7 +19,7 @@
                 <span style="display:block;" @click="logout">{{ $t('navbar.logOut') }}</span>
               </el-dropdown-item>
             </el-dropdown-menu>
-          </el-dropdown>
+          </el-dropdown> -->
         </ul>
       </div><!-- /.container -->
     </header>
@@ -36,24 +37,32 @@
                     </div>
                 </div>
                 <div class="body">
+                  <el-form-item prop="name">
                     <label class="text-muted">Business Name </label>
-                    <el-input name="name" type="text" auto-complete="on" :placeholder="$t('Enter Business Name')" />
+                      <input type="text" placeholder="Enter Business Name" v-model="profileForm.name" name="name">
                     <hr>
+                  </el-form-item>
+                  <el-form-item prop="tagline">
                     <label class="text-muted">Tagline </label>
-                    <el-input name="tagline" type="text" auto-complete="on" :placeholder="$t('Example: Where Fresh Meets Fun')" />
+                      <input type="text" placeholder="Example: Where Fresh Meets Fun" v-model="profileForm.tagline" name="tagline">
                     <hr>
+                  </el-form-item>
+                  <el-form-item prop="email">
                     <label class="text-muted">Email Address </label>
-                    <el-input name="email" type="email" auto-complete="on" :placeholder="$t('Primary Contact Email')" />
+                      <input type="text" placeholder="Primary Contact Email" v-model="profileForm.email" name="email">
                     <hr>
+                  </el-form-item>
+                  <el-form-item prop="phone">
                     <label class="text-muted">Phone Number </label>
-                    <el-input name="phone" type="text" auto-complete="on" :placeholder="$t('Example: 555-555-5555')" />
+                      <input type="text" placeholder="Example: 555-555-5555" v-model="profileForm.phone" name="phone">
                     <hr>
-                    <el-button :loading="loading" type="primary" @click.native.prevent="handleSave">
-                      Save
-                    </el-button>
-                    <el-button :loading="loading" type="primary" @click.native.prevent="handleReset">
-                      Reset
-                    </el-button>
+                  </el-form-item>
+                  <el-button :loading="loading" type="primary" @click.native.prevent="handleSave" class="left-btn">
+                    Save
+                  </el-button>
+                  <el-button :loading="loading" type="primary" @click.native.prevent="handleReset" class="left-btn">
+                    Reset
+                  </el-button>
                 </div>
             </div>
         </div>
@@ -67,17 +76,22 @@
                         </div>
                         <div class="col-lg-8 col-md-12">
                             <div class="form-group">
-                                <el-input name="address" type="text" auto-complete="on" :placeholder="$t('Address')" />
+                              <el-form-item prop="address">
+                                <input type="text" placeholder="Address" v-model="profileForm.address" name="address">
+                              </el-form-item>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-12">
                             <div class="form-group">
-                                <el-input name="city" type="text" auto-complete="on" :placeholder="$t('City')" />
+                              <el-form-item prop="city">
+                                <input type="text" placeholder="City" v-model="profileForm.city" name="city">
+                              </el-form-item>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-12">
                             <div class="form-group">
-                                <select class="form-control">
+                              <el-form-item prop="country">
+                                <select class="form-control" name="country" v-model="profileForm.country">
                                     <option value="">-- Select Country --</option>
                                     <option value="AF">Afghanistan</option>
                                     <option value="AX">Åland Islands</option>
@@ -329,31 +343,46 @@
                                     <option value="ZM">Zambia</option>
                                     <option value="ZW">Zimbabwe</option>
                                 </select>
+                              </el-form-item>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-12">
                             <div class="form-group">
-                                <el-input name="state" type="text" auto-complete="on" :placeholder="$t('State/Province')" />
+                              <el-form-item prop="state">
+                                <input type="text" placeholder="State" v-model="profileForm.state" name="state">
+                              </el-form-item>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-12">
                             <div class="form-group">
-                                <el-input name="zipcode" type="text" auto-complete="on" :placeholder="$t('Zip Code')" />
+                              <el-form-item prop="zipcode">
+                                <input type="text" placeholder="Zip Code" v-model="profileForm.zipcode" name="zipcode">
+                              </el-form-item>
                             </div>
                         </div>
                         <div class="col-12">
                           <label class="text-muted">Departments & Employee Pods </label>
                         </div>
-                        <div class="col-lg-6 col-md-12">
+                        <div class="col-lg-12 col-md-12">
                             <div class="form-group">
-
+                              <ul class="department-list">
+                                <li v-for="(department, index) in departments"  v-bind:key="department">
+                                  <el-form-item>
+                                    <el-input name="department[]" type="text" auto-complete="on" v-model="profileForm.department" />
+                                    <button @click="deleteRow(index)" class="btn-remove"><i class="el-icon-delete" /></button>
+                                  </el-form-item>
+                                </li>
+                              </ul>
+                              <el-button :loading="loading" type="primary" @click="addRow" class="btn-save-continue">
+                                Add Department
+                              </el-button>
                             </div>
                         </div>
                         <div class="col-12">
 
                         </div>
                         <div class="col-12">
-                          <el-button :loading="loading" type="primary" @click.native.prevent="handleSaveContinue">
+                          <el-button :loading="loading" type="primary" @click.native.prevent="handleSaveContinue" class="btn-save-continue">
                             Save & Continue
                           </el-button>
                         </div>
@@ -379,22 +408,27 @@ export default {
         callback();
       }
     };
-    const validatePass = (rule, value, callback) => {
-      if (value.length < 4) {
-        callback(new Error('Password cannot be less than 4 digits'));
-      } else {
-        callback();
-      }
-    };
     return {
+      departments: [],
       profileForm: {
-        email: 'admin@portal.dev',
-        password: 'admin',
+        email: '',
+        name: '',
+        tagline: '',
+        phone: '',
+        address: '',
+        city: '',
+        country: '',
+        state: '',
+        zipcode: '',
+        department: [],
       },
       profileRules: {
         email: [{ required: true, trigger: 'blur', validator: validateEmail }],
-        password: [{ required: true, trigger: 'blur', validator: validatePass }],
+        name: [{ required: true, trigger: 'blur' }],
+        tagline: [{ required: true, trigger: 'blur' }],
+        phone: [{ required: true, trigger: 'blur' }],
       },
+      dialogVisible: false,
       loading: false,
       pwdType: 'password',
       redirect: undefined,
@@ -409,24 +443,12 @@ export default {
     },
   },
   methods: {
-    showPwd() {
-      if (this.pwdType === 'password') {
-        this.pwdType = '';
-      } else {
-        this.pwdType = 'password';
-      }
-    },
-    handleLogin() {
+    handleSave() {
       this.$refs.profileForm.validate(valid => {
         if (valid) {
           this.loading = true;
-          this.$store.dispatch('user/login', this.profileForm)
+          this.$store.dispatch('profile/save', this.profileForm)
             .then((result) => {
-              if (result) {
-                this.$router.push({ path: this.redirect || '/' });
-              } else {
-                this.$router.push({ path: '/profile-complete' });
-              }
               this.loading = false;
             })
             .catch(() => {
@@ -438,11 +460,37 @@ export default {
         }
       });
     },
-    handleForget() {
-      this.$router.push({ path: '/forget-password' });
+    handleSaveContinue() {
+      this.$refs.profileForm.validate(valid => {
+        if (valid) {
+          this.loading = true;
+          this.$store.dispatch('profile/save', this.profileForm)
+            .then((result) => {
+              this.$router.push({ path: '/dashboard' });
+              this.loading = false;
+            })
+            .catch(() => {
+              this.loading = false;
+            });
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
     },
-    handleRegister() {
-      this.$router.push({ path: '/register' });
+    handleReset() {
+      this.profileForm.email = '';
+      this.profileForm.name = '';
+      this.profileForm.tagline = '';
+      this.profileForm.phone = '';
+    },
+    addRow() {
+      this.departments.push({
+        name: '',
+      });
+    },
+    deleteRow(index) {
+      this.departments.splice(index, 1);
     },
   },
 };
@@ -457,27 +505,27 @@ $light_gray:#000;
 .profile-container {
   overflow: scroll;
 
-  .el-input {
+  .left-btn {
+    width: 46%;
+  }
+  input {
     display: inline-block;
     height: 47px;
     width: 100%;
-    input {
-      background: transparent;
-      border: 1px solid #DCDFE6;;
-      -webkit-appearance: none;
-      border-radius: 6px;
-      padding: 12px 5px 12px 15px;
-      color: $light_gray;
-      height: 35px;
-      &:-webkit-autofill {
-        -webkit-box-shadow: 0 0 0px 1000px $bg inset !important;
-        -webkit-text-fill-color: #fff !important;
-      }
+    background: transparent;
+    border: 1px solid #DCDFE6;;
+    -webkit-appearance: none;
+    border-radius: 6px;
+    padding: 12px 5px 12px 15px;
+    color: $light_gray;
+    height: 35px;
+    &:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0px 1000px $bg inset !important;
+      -webkit-text-fill-color: #fff !important;
     }
   }
   .el-form-item {
     border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     color: #454545;
   }
@@ -562,6 +610,21 @@ $main_color: #22ade4;
     .card {
       .body {
         padding: 20px;
+      }
+    }
+    .btn-save-continue {
+      width: 100%;
+    }
+    .btn-remove {
+      background-color: #fff;
+      border: 1px solid #DCDFE6;
+      color: #f00;
+    }
+    .department-list {
+      list-style: none;
+      column-count: 2;
+      .el-input {
+        width: 70%;
       }
     }
   }
