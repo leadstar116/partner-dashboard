@@ -65,6 +65,6 @@
     "vuedraggable": "^2.20.0",
     "vuex": "3.1.0",
     "webpack-visualizer-plugin": "^0.1.11",
-    "xlsx": "^0.14.1"
+    "xlsx": "^0.17.0"
   }
 }
